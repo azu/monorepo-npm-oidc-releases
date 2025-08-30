@@ -29,7 +29,9 @@ jobs:
       EXISTS_TAG: ${{ steps.tag_check.outputs.EXISTS_TAG }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          persist-credentials: false
       - name: Set PACKAGE_VERSION
         run: echo "PACKAGE_VERSION=$(cat lerna.json | jq -r .version)" >> $GITHUB_ENV
       - name: Tag Check
@@ -58,11 +60,13 @@ jobs:
       packages: write
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
-      - name: Setup Node
-        uses: actions/setup-node@v3
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
         with:
-          node-version: 18
+          persist-credentials: false
+      - name: Setup Node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 22
           registry-url: 'https://npm.pkg.github.com'  # [EXAMPLE]
           # for publishing packages to npm
           # registry-url: https://registry.npmjs.org
@@ -87,7 +91,7 @@ jobs:
           # NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Create Git Tag
-        uses: pkgdeps/git-tag-action@v2
+        uses: pkgdeps/git-tag-action@ef111413f44ebe5cc05994e7f5b5b9edaaada08d # v3.0.0
         with:
           version: ${{ env.PACKAGE_VERSION }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -96,18 +100,18 @@ jobs:
           git_tag_prefix: "v"
       - name: Create Release
         id: create_release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@72f2c25fcb47643c292f7107632f7a47c1df5cd8 # v2.3.2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: v${{ env.PACKAGE_VERSION }}
           # Copy Pull Request's tile and body to Release Note
-          release_name: ${{ github.event.pull_request.title }}
+          name: ${{ github.event.pull_request.title }}
           body: ${{ github.event.pull_request.body }}
           draft: false
           prerelease: false
           generate_release_notes: ${{ !github.event.pull_request.body }}
-      - uses: actions/github-script@v6
+      - uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
         if: github.event_name != 'workflow_dispatch'
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
@@ -116,5 +120,5 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: '🎉 Release https://github.com/${{ github.repository }}/releases/tag/v${{ env.PACKAGE_VERSION }}'
+              body: `🎉 Release https://github.com/${context.repo.owner}/${context.repo.repo}/releases/tag/v${process.env.PACKAGE_VERSION}`
             })
