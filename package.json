@@ -21,12 +21,12 @@
     "test": "test"
   },
   "scripts": {
-    "versionup": "node --experimental-strip-types scripts/version.ts",
-    "ci:versionup:patch": "node --experimental-strip-types scripts/version.ts patch && npm run commit-version",
-    "ci:versionup:minor": "node --experimental-strip-types scripts/version.ts minor && npm run commit-version",
-    "ci:versionup:major": "node --experimental-strip-types scripts/version.ts major && npm run commit-version",
+    "versionup": "echo 'Error: Please use CI for versioning. Run the GitHub Actions workflow instead.' && exit 1",
+    "release": "echo 'Error: Please use CI for releases. Run the GitHub Actions workflow instead.' && exit 1",
+    "ci:versionup:patch": "pnpm --recursive --workspace-root exec npm version patch --no-git-tag-version && npm run commit-version",
+    "ci:versionup:minor": "pnpm --recursive --workspace-root exec npm version minor --no-git-tag-version && npm run commit-version",
+    "ci:versionup:major": "pnpm --recursive --workspace-root exec npm version major --no-git-tag-version && npm run commit-version",
     "commit-version": "git add . && git commit -m \"chore(release): v`node -p 'require(\"./package.json\").version'`\"",
-    "release": "pnpm -r publish --no-git-checks",
     "ci:release": "pnpm -r publish --no-git-checks"
   },
   "devDependencies": {},
