@@ -83,11 +83,30 @@ jobs:
       - name: Install npm 11.5.1+ for OIDC support
         # npm 11.5.1+ is required for GitHub OIDC trusted publishing
         # https://docs.npmjs.com/trusted-publishers
-        run: npm install -g npm@^11.5.1
+        run: |
+          npm install -g npm@^11.5.1
+          echo "npm version: $(npm --version)"
+      - name: Verify OIDC Configuration
+        run: |
+          echo "Checking OIDC token availability..."
+          if [ -n "$ACTIONS_ID_TOKEN_REQUEST_URL" ] && [ -n "$ACTIONS_ID_TOKEN_REQUEST_TOKEN" ]; then
+            echo "✓ OIDC token environment variables are set"
+          else
+            echo "✗ OIDC token environment variables are NOT set"
+            exit 1
+          fi
       - name: Install dependencies
         run: pnpm install
       - name: Publish
-        run: npm run ci:release
+        run: |
+          echo "Publishing with npm version: $(npm --version)"
+          echo "Node version: $(node --version)"
+          echo "Registry URL: $(npm config get registry)"
+          
+          # Run lerna publish with provenance
+          npm run ci:release
+        env:
+          NPM_CONFIG_PROVENANCE: true
       - name: Create Git Tag
         uses: pkgdeps/git-tag-action@ef111413f44ebe5cc05994e7f5b5b9edaaada08d # v3.0.0
         with:
