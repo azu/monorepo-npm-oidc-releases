@@ -5,7 +5,7 @@
   "homepage": "https://github.com/azu/monorepo-sandbox/tree/master/packages/monorepo-sandbox-z#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/azu/monorepo-github-releases.git",
+    "url": "https://github.com/azu/monorepo-npm-oidc-releases.git",
     "directory": "packages/monorepo-sandbox-release-z"
   },
   "license": "MIT",
@@ -16,11 +16,9 @@
   "main": "lib/monorepo-sandbox-z.js",
   "scripts": {},
   "dependencies": {
-    "@azu/monorepo-sandbox-release-y": "^1.10.0"
+    "@azu/monorepo-sandbox-release-y": "workspace:*"
   },
   "publishConfig": {
-    "access": "public",
-    "registry": "https://npm.pkg.github.com/"
-  },
-  "gitHead": "58802f67d8c744d4f0858ae7a547a3109e319c6b"
+    "access": "public"
+  }
 }

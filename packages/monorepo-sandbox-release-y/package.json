@@ -4,7 +4,7 @@
   "description": "[example] y is package",
   "repository": {
     "type": "git",
-    "url": "https://github.com/azu/monorepo-github-releases.git",
+    "url": "https://github.com/azu/monorepo-npm-oidc-releases.git",
     "directory": "packages/monorepo-sandbox-release-y"
   },
   "homepage": "https://github.com/azu/monorepo-sandbox/tree/master/packages/monorepo-sandbox-y#readme",
@@ -16,11 +16,9 @@
   "main": "lib/monorepo-sandbox-y.js",
   "scripts": {},
   "dependencies": {
-    "monorepo-sandbox-x": "^0.2.1"
+    "@azu/monorepo-sandbox-release-x": "workspace:*"
   },
   "publishConfig": {
-    "access": "public",
-    "registry": "https://npm.pkg.github.com/"
-  },
-  "gitHead": "58802f67d8c744d4f0858ae7a547a3109e319c6b"
+    "access": "public"
+  }
 }

@@ -1,18 +1,18 @@
 {
   "private": true,
-  "name": "monorepo-github-releases",
+  "name": "monorepo-npm-oidc-releases",
   "version": "1.0.0",
   "description": "monorepo sandbox",
   "keywords": [
     "monorepo"
   ],
-  "homepage": "https://github.com/azu/monorepo-github-releases",
+  "homepage": "https://github.com/azu/monorepo-npm-oidc-releases",
   "bugs": {
-    "url": "https://github.com/azu/monorepo-github-releases/issues"
+    "url": "https://github.com/azu/monorepo-npm-oidc-releases/issues"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/azu/monorepo-github-releases.git"
+    "url": "https://github.com/azu/monorepo-npm-oidc-releases.git"
   },
   "license": "MIT",
   "author": "azu",
