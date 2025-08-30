@@ -58,6 +58,7 @@ jobs:
       issues: write
       pull-requests: write
       packages: write
+      id-token: write  # OIDC for npm publishing
     steps:
       - name: Checkout
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
@@ -67,9 +68,9 @@ jobs:
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: 22
-          registry-url: 'https://npm.pkg.github.com'  # [EXAMPLE]
-          # for publishing packages to npm
-          # registry-url: https://registry.npmjs.org
+          registry-url: 'https://registry.npmjs.org'
+      - name: Setup pnpm
+        uses: pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda # v4.1.0
       - name: Git Identity
         run: |
           git config --global user.name 'github-actions[bot]'
@@ -79,17 +80,14 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Set PACKAGE_VERSION
         run: echo "PACKAGE_VERSION=$(cat lerna.json | jq -r .version)" >> $GITHUB_ENV
-      - name: Install
-        run: yarn install
+      - name: Install npm 11.5.1+ for OIDC support
+        # npm 11.5.1+ is required for GitHub OIDC trusted publishing
+        # https://docs.npmjs.com/trusted-publishers
+        run: npm install -g npm@^11.5.1
+      - name: Install dependencies
+        run: pnpm install
       - name: Publish
         run: npm run ci:release
-        env:
-          # actions/setup-node create .npmrc with `NODE_AUTH_TOKEN` env if `registry-url` is defined
-          # === `echo "${ registry-url }/:_authToken=${ NODE_AUTH_TOKEN }" > .npmrc`
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }} # [EXAMPLE]
-          # for publishing packages to npm
-          # NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Create Git Tag
         uses: pkgdeps/git-tag-action@ef111413f44ebe5cc05994e7f5b5b9edaaada08d # v3.0.0
         with:
