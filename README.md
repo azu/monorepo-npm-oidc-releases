@@ -1,8 +1,12 @@
-# monorepo release flow example
+# monorepo npm OIDC releases
 
-This example monorepo shows release flow with [pnpm](https://pnpm.io/) + GitHub Release's [Automatically generated release notes](https://docs.github.com/en/repositories/releasing-projects-on-github/automatically-generated-release-notes)
+This example monorepo demonstrates CI-only releases using npm OIDC (OpenID Connect) authentication with [pnpm](https://pnpm.io/) + GitHub Release's [Automatically generated release notes](https://docs.github.com/en/repositories/releasing-projects-on-github/automatically-generated-release-notes)
 
-You can publish packages in monorepo via CI(Pattern A) or Local(Pattern B).
+## Key Benefits
+
+- **No npm tokens required** - Uses OIDC authentication instead of npm tokens
+- **No secrets leakage risk** - Eliminates the need to store and manage npm tokens in GitHub Secrets
+- **Secure CI-only releases** - All releases are performed via GitHub Actions with temporary credentials
 
 ## Published Packages
 
@@ -29,17 +33,19 @@ To enable the release workflows, you need to configure the following:
         - Repository: `your-username/monorepo-npm-oidc-releases`
         - Workflow: `release.yml`
         - Environment: (leave empty)
-   - This eliminates the need for NPM_TOKEN secrets
+   - **This completely eliminates the need for NPM_TOKEN secrets**
+   - **No risk of token leakage or exposure in logs**
    - See [npm docs on trusted publishers](https://docs.npmjs.com/trusted-publishers) for details
 
 ## Usage
 
-### Pattern A: Review Release PR and Publish via CI
+### Create and Review Release PR
 
 UseCase:
 
 - Review Release Note before publishing
-- Publish from CI
+- Secure automated publishing from CI using OIDC
+- Zero secrets configuration - no npm tokens needed
 
 Steps:
 
@@ -59,13 +65,11 @@ Steps:
     - e.g. https://github.com/azu/monorepo-npm-oidc-releases/releases/tag/v1.6.3
 
 > **Warning**
-> If the publishing(Step 5) is failed, you can re-run the workflow, or You can move to Pattern A-5.
+> If the publishing(Step 5) fails, you can re-run the workflow, or use the manual release workflow below.
 
-### Pattern A-5: Just Publish from CI 
+### Manual Release from CI
 
-Pattern A's step 5 is failed in sometimes because npm registry is down or some package is broken.
-
-You can re-publish it manually, but you can use CI for re-publishing.
+If the automatic publishing fails (e.g., npm registry is down or some package is broken), you can manually trigger the release workflow.
 
 UseCase:
 
@@ -80,8 +84,8 @@ Steps:
 
 > **Warning**
 > This manual workflow requires updating version before executing.  
-> So, Most use-cause is for retrying to publish if failed on Pattern A.  
-> If you want to fix something, It is preferable to start again from A.
+> The most common use-case is retrying a failed automatic publish.  
+> If you want to fix something, it is preferable to start again with a new Release PR.
 
 > **Note**
 > No matter how many times this workflow is executed, the result is the same.
@@ -89,27 +93,6 @@ Steps:
 > - No add tag if git tag is added
 > - Overwrite release note if GitHub Release is already created
 
-## Pattern B: Publish from Local
-
-You can publish packages and generate release note from local.
-
-Requirements:
-
-- [GitHub CLI](https://cli.github.com/)
-
-UseCase:
-
-- Publish from Local
-
-You can just run following command:
-
-    npm run versionup && npm run release && gh release create --generate-notes "$(git describe --tags --abbrev=0)"
-
-This command do next steps:
-
-1. Update `packages/*/package.json`'s `version`
-2. Publish to npm
-3. Create Release Note on GitHub Releases
 
 ## Migration Script
 
