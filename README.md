@@ -1,6 +1,6 @@
 # monorepo release flow example
 
-This example monorepo shows release flow with [lerna](https://github.com/lerna/lerna) + GitHub Release's [Automatically generated release notes](https://docs.github.com/en/repositories/releasing-projects-on-github/automatically-generated-release-notes)
+This example monorepo shows release flow with [pnpm](https://pnpm.io/) + GitHub Release's [Automatically generated release notes](https://docs.github.com/en/repositories/releasing-projects-on-github/automatically-generated-release-notes)
 
 You can publish packages in monorepo via CI(Pattern A) or Local(Pattern B).
 
@@ -47,7 +47,7 @@ Steps:
    - You can select new version with semver(patch,minor,major)
    - ![Create Release Pull Request Image](./create-release-pr.png)
 2. [CI] Create Release PR
-   - Update `lerna.json`'s `version` and `packages/*/package.json`'s `version`
+   - Update `packages/*/package.json`'s `version`
    - Fill the Pull Request body with [Automatically generated release notes](https://docs.github.com/en/repositories/releasing-projects-on-github/automatically-generated-release-notes)
    - e.g. https://github.com/azu/monorepo-npm-oidc-releases/pull/18
 3. Review Release PR
@@ -107,7 +107,7 @@ You can just run following command:
 
 This command do next steps:
 
-1. Update `lerna.json`'s `version` and `packages/*/package.json`'s `version`
+1. Update `packages/*/package.json`'s `version`
 2. Publish to npm
 3. Create Release Note on GitHub Releases
 
@@ -117,7 +117,7 @@ if you want to use this release flow, you can use [migration script](./migrate.s
 
     curl -fsSL https://raw.githubusercontent.com/azu/monorepo-npm-oidc-releases/main/migrate.sh | bash
 
-This migration script support a single npm package and lerna.
+This migration script support a single npm package and pnpm workspaces.
 
 ## Changelog
 
@@ -139,7 +139,7 @@ So, You need to change each `packages/*/package.json` after fork this repository
 - [azu/github-label-setup: 📦 Setup GitHub label without configuration.](https://github.com/azu/github-label-setup)
   - This monorepo use this label set for [Automatically generated release notes](https://docs.github.com/en/repositories/releasing-projects-on-github/automatically-generated-release-notes)
 - [azu/lerna-monorepo-github-actions-release: Lerna + monorepo +GitHub Actions Release Flow](https://github.com/azu/lerna-monorepo-github-actions-release)
-  - lerna + conventional commit release flow with GitHub Actions
+  - monorepo + conventional commit release flow with GitHub Actions
 
 ## Contributing
 
