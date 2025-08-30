@@ -30,7 +30,7 @@
     "ci:release": "lerna publish from-package --yes"
   },
   "devDependencies": {
-    "lerna": "^6.4.0"
+    "lerna": "^8.2.3"
   },
   "workspaces": {
     "packages": [
