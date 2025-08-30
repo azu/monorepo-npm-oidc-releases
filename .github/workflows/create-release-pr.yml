@@ -41,7 +41,7 @@ jobs:
           GIT_AUTHOR_NAME: ${{ github.actor }}
           GIT_AUTHOR_EMAIL: ${{ github.actor }}@users.noreply.github.com
       - name: Set PACKAGE_VERSION
-        run: echo "PACKAGE_VERSION=$(cat lerna.json | jq -r .version)" >> $GITHUB_ENV
+        run: echo "PACKAGE_VERSION=$(cat package.json | jq -r .version)" >> $GITHUB_ENV
       - name: Set GitHub Release Note
         id: release_note
         uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1

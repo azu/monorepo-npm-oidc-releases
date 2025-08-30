@@ -33,7 +33,7 @@ jobs:
         with:
           persist-credentials: false
       - name: Set PACKAGE_VERSION
-        run: echo "PACKAGE_VERSION=$(cat lerna.json | jq -r .version)" >> $GITHUB_ENV
+        run: echo "PACKAGE_VERSION=$(cat package.json | jq -r .version)" >> $GITHUB_ENV
       - name: Tag Check
         id: tag_check
         run: |
@@ -79,7 +79,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Set PACKAGE_VERSION
-        run: echo "PACKAGE_VERSION=$(cat lerna.json | jq -r .version)" >> $GITHUB_ENV
+        run: echo "PACKAGE_VERSION=$(cat package.json | jq -r .version)" >> $GITHUB_ENV
       - name: Install npm 11.5.1+ for OIDC support
         # npm 11.5.1+ is required for GitHub OIDC trusted publishing
         # https://docs.npmjs.com/trusted-publishers
