@@ -95,15 +95,10 @@ jobs:
             echo "✗ OIDC token environment variables are NOT set"
             exit 1
           fi
+      - name: Install dependencies
+        run: pnpm install
       - name: Publish
-        run: |
-          echo "Publishing with npm version: $(npm --version)"
-          echo "Node version: $(node --version)"
-          echo "Registry URL: $(npm config get registry)"
-          echo "OIDC Token URL: ${ACTIONS_ID_TOKEN_REQUEST_URL:0:50}..."
-          
-          # Run publish with provenance (OIDC authentication)
-          npm run ci:release
+        run:           npm run ci:release
         env:
           NPM_CONFIG_PROVENANCE: true
       - name: Create Git Tag
