@@ -10,6 +10,28 @@ You can publish packages in monorepo via CI(Pattern A) or Local(Pattern B).
 - [@azu/monorepo-sandbox-release-y](https://www.npmjs.com/package/@azu/monorepo-sandbox-release-y)
 - [@azu/monorepo-sandbox-release-z](https://www.npmjs.com/package/@azu/monorepo-sandbox-release-z)
 
+## Setup
+
+### GitHub Actions Configuration
+
+To enable the release workflows, you need to configure the following:
+
+1. **Enable GitHub Actions to create Pull Requests**:
+   - Go to Settings → Actions → General
+   - Under "Workflow permissions", check "Allow GitHub Actions to create and approve pull requests"
+
+2. **Configure npm OIDC Publishing** (requires npm 11.5.1+):
+   - For each package in npmjs.com:
+     1. Go to the package page (e.g., https://www.npmjs.com/package/@your-scope/package-name)
+     2. Click "Settings" → "Publishing access"
+     3. Under "Trusted publishers", click "Add trusted publisher"
+     4. Select "GitHub Actions" and configure:
+        - Repository: `your-username/monorepo-npm-oidc-releases`
+        - Workflow: `release.yml`
+        - Environment: (leave empty)
+   - This eliminates the need for NPM_TOKEN secrets
+   - See [npm docs on trusted publishers](https://docs.npmjs.com/trusted-publishers) for details
+
 ## Usage
 
 ### Pattern A: Review Release PR and Publish via CI
