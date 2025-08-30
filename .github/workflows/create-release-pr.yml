@@ -78,21 +78,16 @@ jobs:
         env:
           STEPS_CPR_OUTPUTS_PULL_REQUEST_NUMBER: ${{ steps.cpr.outputs.pull-request-number }}
           STEPS_CPR_OUTPUTS_PULL_REQUEST_URL: ${{ steps.cpr.outputs.pull-request-url }}
-      - name: Trigger CI by pushing empty commit
+      - name: Display CI trigger instructions
         if: ${{ steps.cpr.outputs.pull-request-number }}
         run: |
-          # Checkout the PR branch
-          git fetch origin release/${PACKAGE_VERSION}:release/${PACKAGE_VERSION}
-          git checkout release/${PACKAGE_VERSION}
-          
-          # Push an empty commit to trigger CI
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git config --global user.name "github-actions[bot]"
-          git commit --allow-empty -m "Trigger CI"
-          git push origin release/${PACKAGE_VERSION}
-          
-          echo "::notice::Pushed empty commit to trigger CI on PR #${STEPS_CPR_OUTPUTS_PULL_REQUEST_NUMBER}"
+          echo "::notice::⚠️ GitHub Actions cannot trigger CI on PRs created with GITHUB_TOKEN"
+          echo "::notice::To trigger CI, please do one of the following:"
+          echo "::notice::1. Close and reopen the PR"
+          echo "::notice::2. Push an empty commit manually:"
+          echo "::notice::   gh pr checkout ${STEPS_CPR_OUTPUTS_PULL_REQUEST_NUMBER}"
+          echo "::notice::   git commit --allow-empty -m 'Trigger CI'"
+          echo "::notice::   git push"
+          echo "::notice::3. Or use Personal Access Token (PAT) instead of GITHUB_TOKEN"
         env:
           STEPS_CPR_OUTPUTS_PULL_REQUEST_NUMBER: ${{ steps.cpr.outputs.pull-request-number }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PACKAGE_VERSION: ${{ env.PACKAGE_VERSION }}
