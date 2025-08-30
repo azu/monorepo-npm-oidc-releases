@@ -93,15 +93,6 @@ Steps:
 > - No add tag if git tag is added
 > - Overwrite release note if GitHub Release is already created
 
-
-## Migration Script
-
-if you want to use this release flow, you can use [migration script](./migrate.sh).
-
-    curl -fsSL https://raw.githubusercontent.com/azu/monorepo-npm-oidc-releases/main/migrate.sh | bash
-
-This migration script support a single npm package and pnpm workspaces.
-
 ## Changelog
 
 See [Releases page](https://github.com/azu/monorepo-sandbox/releases).
@@ -121,8 +112,11 @@ So, You need to change each `packages/*/package.json` after fork this repository
 
 - [azu/github-label-setup: 📦 Setup GitHub label without configuration.](https://github.com/azu/github-label-setup)
   - This monorepo use this label set for [Automatically generated release notes](https://docs.github.com/en/repositories/releasing-projects-on-github/automatically-generated-release-notes)
+- [azu/monorepo-github-releases: monorepo release flow: lerna + GitHub Release's Automatically generated release notes](https://github.com/azu/monorepo-github-releases)
+  - monorepo release flow: lerna + GitHub Release's Automatically generated release notes 
 - [azu/lerna-monorepo-github-actions-release: Lerna + monorepo +GitHub Actions Release Flow](https://github.com/azu/lerna-monorepo-github-actions-release)
   - monorepo + conventional commit release flow with GitHub Actions
+
 
 ## Contributing
 

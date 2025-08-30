@@ -23,8 +23,10 @@ jobs:
     permissions:
       contents: read
     runs-on: ubuntu-latest
-    # when release PR is merged or workflow_dispatch is triggered, run this job
-    if: github.event.pull_request.merged == true || github.event_name == 'workflow_dispatch'
+    # when release PR is merged with Type: Release label or workflow_dispatch is triggered, run this job
+    if: |
+      (github.event.pull_request.merged == true && contains(github.event.pull_request.labels.*.name, 'Type: Release')) || 
+      github.event_name == 'workflow_dispatch'
     outputs:
       EXISTS_TAG: ${{ steps.tag_check.outputs.EXISTS_TAG }}
     steps:
