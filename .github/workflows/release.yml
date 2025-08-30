@@ -86,19 +86,10 @@ jobs:
         run: |
           npm install -g npm@^11.5.1
           echo "npm version: $(npm --version)"
-      - name: Verify OIDC Configuration
-        run: |
-          echo "Checking OIDC token availability..."
-          if [ -n "$ACTIONS_ID_TOKEN_REQUEST_URL" ] && [ -n "$ACTIONS_ID_TOKEN_REQUEST_TOKEN" ]; then
-            echo "✓ OIDC token environment variables are set"
-          else
-            echo "✗ OIDC token environment variables are NOT set"
-            exit 1
-          fi
       - name: Install dependencies
         run: pnpm install
       - name: Publish
-        run:           npm run ci:release
+        run: pnpm run ci:release
         env:
           NPM_CONFIG_PROVENANCE: true
       - name: Create Git Tag
