@@ -78,3 +78,21 @@ jobs:
         env:
           STEPS_CPR_OUTPUTS_PULL_REQUEST_NUMBER: ${{ steps.cpr.outputs.pull-request-number }}
           STEPS_CPR_OUTPUTS_PULL_REQUEST_URL: ${{ steps.cpr.outputs.pull-request-url }}
+      - name: Trigger CI by pushing empty commit
+        if: ${{ steps.cpr.outputs.pull-request-number }}
+        run: |
+          # Checkout the PR branch
+          git fetch origin release/${PACKAGE_VERSION}:release/${PACKAGE_VERSION}
+          git checkout release/${PACKAGE_VERSION}
+          
+          # Push an empty commit to trigger CI
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
+          git commit --allow-empty -m "Trigger CI"
+          git push origin release/${PACKAGE_VERSION}
+          
+          echo "::notice::Pushed empty commit to trigger CI on PR #${STEPS_CPR_OUTPUTS_PULL_REQUEST_NUMBER}"
+        env:
+          STEPS_CPR_OUTPUTS_PULL_REQUEST_NUMBER: ${{ steps.cpr.outputs.pull-request-number }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PACKAGE_VERSION: ${{ env.PACKAGE_VERSION }}
