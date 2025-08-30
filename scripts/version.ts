@@ -60,15 +60,5 @@ for (const workspace of workspaces) {
   }
 }
 
-// Update lerna.json for compatibility (if it exists)
-try {
-  const lernaJsonPath = join(rootDir, 'lerna.json');
-  const lernaJson = JSON.parse(readFileSync(lernaJsonPath, 'utf-8'));
-  lernaJson.version = newVersion;
-  writeFileSync(lernaJsonPath, JSON.stringify(lernaJson, null, 2) + '\n');
-  console.log(`Updated lerna.json to ${newVersion}`);
-} catch (error) {
-  // lerna.json doesn't exist or can't be updated, that's okay
-}
 
 console.log(`\n✓ Version updated to ${newVersion}`);
