@@ -110,6 +110,8 @@ jobs:
           
           # Run lerna publish with provenance (OIDC authentication)
           npm run ci:release
+        env:
+          NPM_CONFIG_PROVENANCE: true
       - name: Create Git Tag
         uses: pkgdeps/git-tag-action@ef111413f44ebe5cc05994e7f5b5b9edaaada08d # v3.0.0
         with:
