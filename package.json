@@ -1,39 +1,39 @@
 {
-  "private": true,
-  "name": "monorepo-npm-oidc-releases",
-  "version": "2.1.1",
-  "description": "monorepo sandbox",
-  "keywords": [
-    "monorepo"
-  ],
-  "homepage": "https://github.com/azu/monorepo-npm-oidc-releases",
-  "bugs": {
-    "url": "https://github.com/azu/monorepo-npm-oidc-releases/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/azu/monorepo-npm-oidc-releases.git"
-  },
-  "license": "MIT",
-  "author": "azu",
-  "directories": {
-    "lib": "lib",
-    "test": "test"
-  },
-  "scripts": {
-    "versionup": "echo 'Error: Please use CI for versioning. Run the GitHub Actions workflow instead.' && exit 1",
-    "release": "echo 'Error: Please use CI for releases. Run the GitHub Actions workflow instead.' && exit 1",
-    "ci:versionup:patch": "pnpm version patch --no-git-tag-version && pnpm --recursive exec pnpm pkg set version=\"`node -p \"JSON.parse(fs.readFileSync('package.json', 'utf8')).version\"`\" && npm run commit-version",
-    "ci:versionup:minor": "pnpm version minor --no-git-tag-version && pnpm --recursive exec pnpm pkg set version=\"`node -p \"JSON.parse(fs.readFileSync('package.json', 'utf8')).version\"`\" && npm run commit-version",
-    "ci:versionup:major": "pnpm version major --no-git-tag-version && pnpm --recursive exec pnpm pkg set version=\"`node -p \"JSON.parse(fs.readFileSync('package.json', 'utf8')).version\"`\" && npm run commit-version",
-    "commit-version": "git add . && git commit -m \"chore(release): v`node -p 'require(\"./package.json\").version'`\"",
-    "ci:release": "pnpm -r publish --no-git-checks"
-  },
-  "devDependencies": {},
-  "workspaces": {
-    "packages": [
-      "packages/*"
-    ]
-  },
-  "packageManager": "pnpm@11.3.0+sha512.2c403d6594527287672b1f7056343a1f7c3634036a67ffabfcc2b3d7595d843768f8787148d1b57cf7956c90606bbd192857c363af19e96d2d0ec9ec5741d215"
+    "private": true,
+    "name": "monorepo-npm-oidc-releases",
+    "version": "2.1.1",
+    "description": "monorepo sandbox",
+    "keywords": [
+        "monorepo"
+    ],
+    "homepage": "https://github.com/azu/monorepo-npm-oidc-releases",
+    "bugs": {
+        "url": "https://github.com/azu/monorepo-npm-oidc-releases/issues"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/azu/monorepo-npm-oidc-releases.git"
+    },
+    "license": "MIT",
+    "author": "azu",
+    "directories": {
+        "lib": "lib",
+        "test": "test"
+    },
+    "scripts": {
+        "versionup": "echo 'Error: Please use CI for versioning. Run the GitHub Actions workflow instead.' && exit 1",
+        "release": "echo 'Error: Please use CI for releases. Run the GitHub Actions workflow instead.' && exit 1",
+        "ci:versionup:patch": "pnpm version patch --no-git-tag-version && pnpm --recursive exec pnpm pkg set version=\"`node -p \"JSON.parse(fs.readFileSync('package.json', 'utf8')).version\"`\" && npm run commit-version",
+        "ci:versionup:minor": "pnpm version minor --no-git-tag-version && pnpm --recursive exec pnpm pkg set version=\"`node -p \"JSON.parse(fs.readFileSync('package.json', 'utf8')).version\"`\" && npm run commit-version",
+        "ci:versionup:major": "pnpm version major --no-git-tag-version && pnpm --recursive exec pnpm pkg set version=\"`node -p \"JSON.parse(fs.readFileSync('package.json', 'utf8')).version\"`\" && npm run commit-version",
+        "commit-version": "git add . && git commit -m \"chore(release): v`node -p 'require(\"./package.json\").version'`\"",
+        "ci:release": "pnpm -r stage publish --no-git-checks"
+    },
+    "devDependencies": {},
+    "workspaces": {
+        "packages": [
+            "packages/*"
+        ]
+    },
+    "packageManager": "pnpm@11.3.0+sha512.2c403d6594527287672b1f7056343a1f7c3634036a67ffabfcc2b3d7595d843768f8787148d1b57cf7956c90606bbd192857c363af19e96d2d0ec9ec5741d215"
 }
