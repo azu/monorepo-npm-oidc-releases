@@ -1,7 +1,7 @@
 {
     "private": true,
     "name": "monorepo-npm-oidc-releases",
-    "version": "2.1.1",
+    "version": "3.0.0",
     "description": "monorepo sandbox",
     "keywords": [
         "monorepo"
@@ -29,7 +29,6 @@
         "commit-version": "git add . && git commit -m \"chore(release): v`node -p 'require(\"./package.json\").version'`\"",
         "ci:release": "pnpm -r stage publish --no-git-checks"
     },
-    "devDependencies": {},
     "workspaces": {
         "packages": [
             "packages/*"
